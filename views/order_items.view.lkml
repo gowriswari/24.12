@@ -9,12 +9,13 @@ view: order_items {
   }
   dimension_group: created {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, date, week,day_of_week, month, quarter, year]
     sql: ${TABLE}.created_at ;;
+    drill_fields: [detail*]
   }
   dimension_group: delivered {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, date, week,day_of_week, month, quarter, year]
     sql: ${TABLE}.delivered_at ;;
   }
   dimension: inventory_item_id {
@@ -60,19 +61,29 @@ view: order_items {
     drill_fields: [detail*]
   }
 
+  measure: test_sum {
+    type: sum
+    sql: ${sale_price} ;;
+  }
+
+  measure: bad {
+    type: number
+    sql: sum(${sale_price}) ;;
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
-    fields: [
-	id,
-	users.last_name,
-	users.id,
-	users.first_name,
-	inventory_items.id,
-	inventory_items.product_name,
-	products.name,
-	products.id,
-	orders.order_id
-	]
+    fields: [created_date,
+  id,
+  users.last_name,
+  users.id,
+  users.first_name,
+  inventory_items.id,
+  inventory_items.product_name,
+  products.name,
+  products.id,
+  orders.order_id
+  ]
   }
 
 }
