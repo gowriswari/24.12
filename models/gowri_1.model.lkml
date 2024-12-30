@@ -2,6 +2,7 @@ connection: "gowri-bigquery"
 
 # include all the views
 include: "/views/**/*.view.lkml"
+include: "/schedulejob.dashboard.lookml"
 
 datagroup: gowri_1_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
